@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BTelling Studio — Создание контента и лаунчер по Minecraft</title>
+  <title>BTelling Studio — Фирменный лаунчер Minecraft</title>
   <style>
     :root {
       --bg-color: #0b0d10;
       --card-bg: #13171f;
-      --accent: #57f287;
-      --accent-hover: #3ee070;
+      --accent: #ff9900;
+      --accent-hover: #e08500;
+      --green-accent: #57f287;
       --text: #ffffff;
       --text-muted: #9fa7b5;
       --border: #202632;
@@ -67,33 +68,33 @@
     }
 
     .hero {
-      min-height: 90vh;
+      min-height: 95vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 120px 20px 60px;
-      background: radial-gradient(circle at 50% 30%, #1a2332 0%, var(--bg-color) 70%);
+      padding: 130px 20px 60px;
+      background: radial-gradient(circle at 50% 25%, #1f1b13 0%, var(--bg-color) 70%);
     }
 
     .badge {
-      background: rgba(87, 242, 135, 0.1);
+      background: rgba(255, 153, 0, 0.1);
       color: var(--accent);
       padding: 6px 16px;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 600;
-      border: 1px solid rgba(87, 242, 135, 0.2);
+      border: 1px solid rgba(255, 153, 0, 0.2);
       margin-bottom: 20px;
       display: inline-block;
     }
 
     .hero h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 800;
       margin-bottom: 18px;
-      max-width: 800px;
+      max-width: 850px;
       line-height: 1.2;
     }
 
@@ -102,49 +103,29 @@
     }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-muted);
-      max-width: 600px;
+      max-width: 650px;
       margin-bottom: 35px;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
     }
 
     .btn {
       background-color: var(--accent);
       color: #0b0d10;
-      padding: 14px 32px;
-      border-radius: 10px;
+      padding: 16px 36px;
+      border-radius: 12px;
       text-decoration: none;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.05rem;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 20px rgba(87, 242, 135, 0.25);
+      box-shadow: 0 4px 25px rgba(255, 153, 0, 0.3);
       display: inline-block;
     }
 
     .btn:hover {
       background-color: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(87, 242, 135, 0.35);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-      box-shadow: none;
-    }
-
-    .btn-secondary:hover {
-      background: var(--card-bg);
-      border-color: var(--accent);
-      color: var(--accent);
+      box-shadow: 0 6px 30px rgba(255, 153, 0, 0.4);
     }
 
     .section {
@@ -155,20 +136,24 @@
 
     .section-title {
       text-align: center;
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
+    }
+
+    .section-title span {
+      color: var(--accent);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
     }
 
     .card {
       background: var(--card-bg);
-      padding: 30px;
+      padding: 35px 30px;
       border-radius: 16px;
       border: 1px solid var(--border);
       transition: all 0.3s ease;
@@ -176,18 +161,18 @@
 
     .card:hover {
       border-color: var(--accent);
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
     }
 
     .card-icon {
-      font-size: 2rem;
-      margin-bottom: 16px;
+      font-size: 2.2rem;
+      margin-bottom: 18px;
       display: inline-block;
     }
 
     .card h3 {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       margin-bottom: 12px;
       color: var(--text);
     }
@@ -195,52 +180,80 @@
     .card p {
       color: var(--text-muted);
       font-size: 0.95rem;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    /* Launcher Showcase Banner */
-    .launcher-banner {
-      background: linear-gradient(135deg, #13171f 0%, #1a2332 100%);
+    /* Showcase Gallery */
+    .showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .showcase-item {
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
+      border-radius: 16px;
       overflow: hidden;
-      margin: 40px 0;
+      transition: transform 0.3s ease;
     }
 
-    .launcher-banner h2 {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
+    .showcase-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
     }
 
-    .launcher-banner h2 span {
+    .showcase-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 1px solid var(--border);
+      background: #111;
+    }
+
+    .showcase-content {
+      padding: 25px;
+    }
+
+    .showcase-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
       color: var(--accent);
     }
 
-    .launcher-banner p {
+    .showcase-content p {
       color: var(--text-muted);
-      max-width: 700px;
-      margin-bottom: 30px;
-      font-size: 1.05rem;
+      font-size: 0.9rem;
+    }
+
+    /* Download CTA Section */
+    .download-section {
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(180deg, var(--bg-color) 0%, #13171f 100%);
+      border-top: 1px solid var(--border);
+    }
+
+    .download-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .download-section p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 35px;
+      font-size: 1.1rem;
     }
 
     footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 30px 20px;
       border-top: 1px solid var(--border);
       color: var(--text-muted);
       font-size: 0.9rem;
       background: #080a0c;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
     }
   </style>
 </head>
@@ -249,75 +262,78 @@
   <header>
     <div class="logo">BTelling <span>Studio</span></div>
     <nav>
-      <a href="#launcher">Лаунчер</a>
-      <a href="#services">Услуги</a>
-      <a href="#contact">Контакты</a>
+      <a href="#features">Возможности</a>
+      <a href="#interface">Интерфейс</a>
+      <a href="#download" style="color: var(--accent); font-weight: 600;">Скачать</a>
     </nav>
   </header>
 
   <section class="hero">
-    <div class="badge">Next-Gen Minecraft Studio</div>
-    <h1>Создаём топовый контент и <span>инструменты</span></h1>
-    <p>Разрабатываем кастомные аддоны, создаем сценарии для YouTube и представляем наш фирменный лаунчер для серверов.</p>
-    <div class="btn-group">
-      <a href="http://btkubikmc.duckdns.org" target="_blank" class="btn">Скачать лаунчер</a>
-      <a href="#services" class="btn btn-secondary">Наши услуги</a>
-    </div>
+    <div class="badge">BTelling Launcher</div>
+    <h1>Фирменный лаунчер <span>BTelling Studio</span> для Minecraft</h1>
+    <p>Создавай локальные серверы, объединяй Bedrock и Java платформы в один клик, устанавливай моды из каталогов и играй с комфортом.</p>
+    <a href="http://btkubikmc.duckdns.org" target="_blank" class="btn">Скачать лаунчер</a>
   </section>
 
-  <!-- Блок лаунчера -->
-  <section class="section" id="launcher">
-    <div class="launcher-banner">
-      <div class="badge">Флагманский софт</div>
-      <h2>Фирменный лаунчер <span>BTKUBIKMC</span></h2>
-      <p>Уникальный инструмент для комфортной игры. Запускайте локальные Bedrock-серверы в пару кликов, объединяйте игроков с Bedrock и Java на одной карте и наслаждайтесь ультрабыстрым и красивым интерфейсом.</p>
-      <a href="http://btkubikmc.duckdns.org" target="_blank" class="btn">Перейти к лаунчеру</a>
-    </div>
-
-    <div class="grid" style="margin-top: 30px;">
+  <section class="section" id="features">
+    <h2 class="section-title">Главные <span>возможности</span></h2>
+    <div class="grid">
       <div class="card">
         <div class="card-icon">🚀</div>
-        <h3>Локальные Bedrock-серверы</h3>
-        <p>Поднимай свой собственный сервер прямо с ПК в один клик без сложных настроек и хостингов.</p>
+        <h3>Локальные серверы</h3>
+        <p>Запуск собственных серверов (включая поддержку Bedrock и Java) прямо на твоем компьютере в один клик без сложных настроек.</p>
       </div>
       <div class="card">
         <div class="card-icon">🌐</div>
-        <h3>Кроссплей Bedrock + Java</h3>
-        <p>Полная совместимость и совместная игра с разных платформ на одном общем сервере без багов.</p>
+        <h3>Кроссплей платформ</h3>
+        <p>Удобное сопряжение для совместной игры с ПК и телефонов на общих картах и серверах без лишних багов и ограничений.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🎨</div>
-        <h3>Современный UI/UX</h3>
-        <p>Стильный тёмный дизайн, высокая скорость работы, удобная навигация и быстрый запуск.</p>
+        <div class="card-icon">📦</div>
+        <h3>Встроенный Каталог</h3>
+        <p>Быстрый доступ к модам, сборкам, ресурспакам и шейдерам из популярных источников прямо из интерфейса лаунчера.</p>
       </div>
     </div>
   </section>
 
-  <!-- Блок услуг -->
-  <section class="section" id="services">
-    <h2 class="section-title">Наши услуги</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-icon">⚙️</div>
-        <h3>Аддоны и Моды</h3>
-        <p>Разработка механик, предметов, UI и скриптов под Bedrock (GameTest API) и Java для уникального геймплея.</p>
+  <!-- Секция со скриншотами интерфейса -->
+  <section class="section" id="interface">
+    <h2 class="section-title">Интерфейс <span>лайнчера</span></h2>
+    <p style="text-align: center; color: var(--text-muted); margin-top: -30px; margin-bottom: 40px;">Взгляните на то, как выглядит рабочий процесс и кастомизация внутри BTelling Launcher.</p>
+    
+    <div class="showcase">
+      <div class="showcase-item">
+        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80" alt="Главный экран лаунчера" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Удобная сборка и запуск</h3>
+          <p>Легкое управление версиями Java и Bedrock Edition, установка аддонов, карт и быстрая настройка параметров игры.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-icon">🎬</div>
-        <h3>Сценарии и Сюжеты</h3>
-        <p>Создание лора, сюжетных линий, ивентов и интриг для YouTube-шоу и приватных SMP-серверов.</p>
+      <div class="showcase-item">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Управление серверами" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Локальные серверы</h3>
+          <p>Раздел серверов позволяет запускать локальные миры и играть с друзьями по сети Wi-Fi или через подключение с телефона.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-icon">🖥️</div>
-        <h3>Настройка Серверов</h3>
-        <p>Конфигурация плагинов, оптимизация нагрузки, настройка прав и защита от сбоев.</p>
+      <div class="showcase-item">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Каталог модов и настройки" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Тонкая настройка и каталог</h3>
+          <p>Кастомизация тем оформления лаунчера, выделение памяти под Java, подключение модов и полная гибкость под себя.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer id="contact">
+  <section class="download-section" id="download">
+    <h2>Оцени лаунчер в деле</h2>
+    <p>Скачай фирменный лаунчер BTelling Studio и начни играть по-новому.</p>
+    <a href="http://btkubikmc.duckdns.org" target="_blank" class="btn">Скачать лаунчер</a>
+  </section>
+
+  <footer>
     <p>© 2026 BTelling Studio. Все права защищены.</p>
-    <p style="margin-top: 8px;">Для связи и заказов в Telegram: <a href="https://t.me/" target="_blank">@your_telegram</a></p>
   </footer>
 
 </body>
