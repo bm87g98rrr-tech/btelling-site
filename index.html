@@ -1,183 +1,354 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kubic Лаунчер</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubic Launcher</title>
+  <style>
+    :root {
+      --bg-color: #0b0d10;
+      --card-bg: #13171f;
+      --accent: #ff9900;
+      --accent-hover: #e08500;
+      --text: #ffffff;
+      --text-muted: #9fa7b5;
+      --border: #202632;
+    }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            color: #fff;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
 
-        /* Задний фон: умиротворяющий лесной градиент */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(10, 25, 15, 0.5), rgba(5, 15, 10, 0.7)), 
-                        url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-            background-size: cover;
-            z-index: -1;
-            filter: brightness(0.8);
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-        /* Эффект легкого тумана/анимации */
-        .fog {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            animation: fogMove 20s linear infinite;
-            z-index: -1;
-            pointer-events: none;
-        }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(11, 13, 16, 0.85);
+      backdrop-filter: blur(12px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
 
-        @keyframes fogMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
 
-        /* Главный контейнер */
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            text-align: center;
-            padding: 20px;
-        }
+    .logo span {
+      color: var(--accent);
+    }
 
-        /* Карточка лаунчера */
-        .launcher-card {
-            background: rgba(15, 30, 20, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            max-width: 450px;
-            width: 100%;
-            animation: fadeIn 1.5s ease-in-out;
-        }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #d4edda;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
+    nav a:hover {
+      color: var(--accent);
+    }
 
-        p {
-            font-size: 1rem;
-            margin-bottom: 25px;
-            color: #c8d6cb;
-            line-height: 1.5;
-        }
+    .hero {
+      min-height: 95vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 130px 20px 60px;
+      background: radial-gradient(circle at 50% 25%, #1f1b13 0%, var(--bg-color) 70%);
+    }
 
-        /* Кнопка скачивания */
-        .download-btn {
-            display: inline-block;
-            background: #2d6a4f;
-            color: white;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.4);
-            border: none;
-            cursor: pointer;
-        }
+    .badge {
+      background: rgba(255, 153, 0, 0.1);
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 153, 0, 0.2);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
 
-        .download-btn:hover {
-            background: #40916c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(64, 145, 108, 0.6);
-        }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      max-width: 850px;
+      line-height: 1.2;
+    }
 
-        /* Плеер / Кнопка управления музыкой */
-        .music-control {
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: background 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .hero h1 span {
+      color: var(--accent);
+    }
 
-        .music-control:hover {
-            background: rgba(0, 0, 0, 0.5);
-        }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 35px;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .btn {
+      background-color: var(--accent);
+      color: #0b0d10;
+      padding: 16px 36px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 25px rgba(255, 153, 0, 0.3);
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(255, 153, 0, 0.4);
+    }
+
+    .section {
+      padding: 80px 8%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 50px;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 35px 30px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Галерея скриншотов */
+    .showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .showcase-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .showcase-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: top left;
+      border-bottom: 1px solid var(--border);
+      background: #111;
+    }
+
+    .showcase-content {
+      padding: 25px;
+    }
+
+    .showcase-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    .showcase-content p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Блок скачивания */
+    .download-section {
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(180deg, var(--bg-color) 0%, #13171f 100%);
+      border-top: 1px solid var(--border);
+    }
+
+    .download-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .download-section p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 35px;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      background: #080a0c;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="background"></div>
-    <div class="fog"></div>
+  <header>
+    <div class="logo">BTelling <span>Studio</span></div>
+    <nav>
+      <a href="#features">Возможности</a>
+      <a href="#interface">Интерфейс</a>
+      <a href="#download" style="color: var(--accent); font-weight: 600;">Скачать</a>
+    </nav>
+  </header>
 
-    <!-- Фоновая музыка (спокойная мелодия) -->
-    <audio id="bg-music" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-    </audio>
+  <section class="hero">
+    <div class="badge">Kubic Launcher</div>
+    <h1>Фирменный лаунчер <span>BTelling Studio</span> для Minecraft</h1>
+    <p>Создавай локальные серверы, управляй модами, настраивай внешний вид и играй вместе с друзьями в один клик.</p>
+    <a href="http://btkubikmc.duckdns.org" target="_blank" class="btn">Скачать лаунчер</a>
+  </section>
 
-    <div class="container">
-        <div class="launcher-card">
-            <h1>Лесной Лаунчер</h1>
-            <p>Добро пожаловать! Включи фоновую музыку, насладись атмосферой хвойного леса и скачай лаунчер для начала работы.</p>
-            
-            <!-- Ссылка на скачивание (замени "launcher.exe" на путь к своему файлу) -->
-            <a href="launcher.exe" class="download-btn" download>Скачать лаунчер</a>
-            
-            <div style="margin-top: 15px;">
-                <button class="music-control" id="music-toggle">
-                    <span>🎵</span> <span id="music-text">Включить музыку</span>
-                </button>
-            </div>
-        </div>
+  <section class="section" id="features">
+    <h2 class="section-title">Главные <span>возможности</span></h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <h3>Моды</h3>
+        <p>Встроенный каталог для удобной установки модов, плагинов, датапаков и шейдеров из Modrinth и CurseForge.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>Серверы</h3>
+        <p>Создание и запуск локальных серверов прямо на ПК с поддержкой подключения друзей по Wi-Fi или с телефонов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Настройки</h3>
+        <p>Гибкая кастомизация тем оформления лаунчера, выделение памяти под Java и тонкая настройка под себя.</p>
+      </div>
     </div>
+  </section>
 
-    <script>
-        const music = document.getElementById('bg-music');
-        const musicToggle = document.getElementById('music-toggle');
-        const musicText = document.getElementById('music-text');
-        
-        music.volume = 0.4; // Установим комфортную тихую громкость
+  <!-- Секция со скриншотами интерфейса (строго по порядку) -->
+  <section class="section" id="interface">
+    <h2 class="section-title">Интерфейс <span>лаунчера</span></h2>
+    <p style="text-align: center; color: var(--text-muted); margin-top: -30px; margin-bottom: 40px;">Взгляните на основные разделы BTelling Launcher.</p>
+    
+    <div class="showcase">
+      <!-- 1. Главная / Сборка (IMG_3172) -->
+      <div class="showcase-item">
+        <img src="IMG_3172.jpeg" alt="Главная и сборки" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Главная / Сборки</h3>
+          <p>Удобное создание сборок, выбор версий Java и Bedrock, а также быстрый запуск игры.</p>
+        </div>
+      </div>
 
-        musicToggle.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                musicText.textContent = 'Выключить музыку';
-            } else {
-                music.pause();
-                musicText.textContent = 'Включить музыку';
-            }
-        });
-    </script>
+      <!-- 2. Каталог модов (IMG_3173) -->
+      <div class="showcase-item">
+        <img src="IMG_3173.jpeg" alt="Каталог модов" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Моды (Каталог)</h3>
+          <p>Огромный выбор модов, плагинов, ресурспаков и шейдеров с быстрой установкой в один клик.</p>
+        </div>
+      </div>
+
+      <!-- 3. Серверы (IMG_3174) -->
+      <div class="showcase-item">
+        <img src="IMG_3174.jpeg" alt="Серверы" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Серверы</h3>
+          <p>Управление локальными мирами и серверами для совместной игры с друзьями по сети.</p>
+        </div>
+      </div>
+
+      <!-- 4. Настройки (IMG_3171) -->
+      <div class="showcase-item">
+        <img src="IMG_3171.jpeg" alt="Настройки лаунчера" class="showcase-img">
+        <div class="showcase-content">
+          <h3>Настройки</h3>
+          <p>Кастомизация тем оформления, выбор цвета кнопок, управление путями Java и параметрами памяти.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="download-section" id="download">
+    <h2>Оцени лаунчер в деле</h2>
+    <p>Скачай Kubik Launcher и начни играть по-новому.</p>
+    <a href="http://btkubikmc.duckdns.org" target="_blank" class="btn">Скачать лаунчер</a>
+  </section>
+
+  <footer>
+    <p>© 2026 BTelling Studio. Все права защищены.</p>
+  </footer>
+
 </body>
 </html>
