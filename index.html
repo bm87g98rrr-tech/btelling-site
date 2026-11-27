@@ -10,7 +10,7 @@
   <link rel="canonical" href="https://btelling.duckdns.org/">
   <meta name="keywords" content="Kubik Launcher, лаунчер майнкрафт, minecraft launcher, скачать лаунчер, java и bedrock, свой сервер майнкрафт, модпак, Modrinth, CurseForge, геймпад, BTelling Studio">
   <meta name="author" content="BTelling Studio">
-  <meta http-equiv="content-language" content="ru">
+  <meta http-equiv="content-language" content="ru, en">
 
   <!-- OpenGraph / Twitter: красивая превьюшка, когда ссылку кидают в чат -->
   <meta property="og:type" content="website">
@@ -30,7 +30,7 @@
         "@type": "WebSite",
         "name": "Kubik Launcher",
         "url": "https://btelling.duckdns.org/",
-        "inLanguage": "ru",
+        "inLanguage": ["ru", "en"],
         "description": "Лаунчер Minecraft Java и Bedrock с модами, своим сервером «Java + Bedrock» и управлением с телефона. Бесплатно, для Windows 10/11."
       },
       {
@@ -68,16 +68,31 @@
     body { background-color: var(--bg-color); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
     header {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
       padding: 18px 8%; background: rgba(11, 13, 16, 0.85);
       backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; z-index: 100;
       border-bottom: 1px solid var(--border);
     }
-    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .logo-mark { width: 28px; height: 28px; image-rendering: pixelated; }
     .logo span { color: var(--accent); }
-    nav a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+    nav { display: flex; align-items: center; flex-wrap: nowrap; }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
     nav a:hover { color: var(--accent); }
+
+    /* Переключатель языка */
+    .lang-switch {
+      display: inline-flex; align-items: center; margin-left: 20px;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 3px; gap: 2px; flex-shrink: 0;
+    }
+    .lang-btn {
+      background: transparent; color: var(--text-muted); border: none;
+      padding: 5px 10px; border-radius: 7px; font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.4px;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { background: var(--accent); color: #0b0d10; }
 
     .hero {
       min-height: 95vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -145,12 +160,21 @@
     footer p { margin-bottom: 6px; }
     footer a { color: var(--text-muted); }
 
+    @media (max-width: 900px) {
+      header { padding: 14px 5%; }
+      nav a { margin-left: 14px; font-size: 0.9rem; }
+      .lang-switch { margin-left: 14px; }
+    }
+
     @media (max-width: 760px) {
       header { padding: 12px 18px; }
       .logo { font-size: 1.15rem; }
       .logo-mark { width: 24px; height: 24px; }
+      nav { gap: 10px; }
       nav a { margin-left: 0; font-size: 0.9rem; display: none; }
-      nav a.cta { display: inline-block; background: var(--accent); color: #0b0d10 !important; padding: 8px 16px; border-radius: 8px; font-weight: 700; }
+      nav a.cta { display: inline-block; background: var(--accent); color: #0b0d10 !important; padding: 7px 14px; border-radius: 8px; font-weight: 700; }
+      .lang-switch { margin-left: 0; }
+      .lang-btn { padding: 4px 8px; font-size: 0.78rem; }
       .section { padding: 60px 20px; }
       .hero { padding-top: 110px; }
       .hero h1 { font-size: 2.1rem; }
@@ -168,232 +192,485 @@
     <span>Kubik</span>&nbsp;Launcher
   </div>
   <nav>
-    <a href="#features">Возможности</a>
-    <a href="#interface">Интерфейс</a>
-    <a href="#phone">С телефона</a>
-    <a href="#whatsnew">Что нового</a>
-    <a href="#faq">Вопросы</a>
-    <a href="#download" class="cta" style="color: var(--accent); font-weight: 600;">Скачать</a>
+    <a href="#features" data-i18n="nav.features">Возможности</a>
+    <a href="#interface" data-i18n="nav.interface">Интерфейс</a>
+    <a href="#phone" data-i18n="nav.phone">С телефона</a>
+    <a href="#whatsnew" data-i18n="nav.whatsnew">Что нового</a>
+    <a href="#faq" data-i18n="nav.faq">Вопросы</a>
+    <a href="#download" class="cta" style="color: var(--accent); font-weight: 600;" data-i18n="nav.download">Скачать</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
   </nav>
 </header>
 
 <section class="hero">
-  <span class="badge">Бесплатно · Windows 10/11 · версия 1.5.0</span>
+  <span class="badge" data-i18n="hero.badge">Бесплатно · Windows 10/11 · версия 1.5.0</span>
   <h1><span>Kubik</span> Launcher</h1>
-  <p>Любая версия Minecraft Java и Bedrock, свой сервер «Java + Bedrock» для игры со всеми друзьями, моды из Modrinth и CurseForge, управление с телефона. Один файл, никаких настроек.</p>
+  <p data-i18n="hero.desc">Любая версия Minecraft Java и Bedrock, свой сервер «Java + Bedrock» для игры со всеми друзьями, моды из Modrinth и CurseForge, управление с телефона. Один файл, никаких настроек.</p>
   <div>
-    <a href="KubikLauncher.exe" class="btn" download>Скачать лаунчер</a>
-    <a href="#features" class="btn ghost">Что умеет</a>
+    <a href="KubikLauncher.exe" class="btn" download data-i18n="hero.download">Скачать лаунчер</a>
+    <a href="#features" class="btn ghost" data-i18n="hero.more">Что умеет</a>
   </div>
 </section>
 
 <section class="section" id="features">
-  <h2 class="section-title">Главные <span>возможности</span></h2>
-  <p class="section-sub">То, чего нет у обычных лаунчеров.</p>
+  <h2 class="section-title" data-i18n-html="features.title">Главные <span>возможности</span></h2>
+  <p class="section-sub" data-i18n="features.sub">То, чего нет у обычных лаунчеров.</p>
   <div class="grid">
     <div class="card">
       <div class="card-icon">🎮</div>
-      <h3>Java и Bedrock в одном</h3>
-      <p>Любая версия Java Edition — от старых альф до свежих снапшотов. Запускает и Bedrock Edition из Microsoft Store. Fabric, Quilt, Forge, NeoForge — Kubik сам поставит нужную Java.</p>
+      <h3 data-i18n="features.c1.title">Java и Bedrock в одном</h3>
+      <p data-i18n="features.c1.desc">Любая версия Java Edition — от старых альф до свежих снапшотов. Запускает и Bedrock Edition из Microsoft Store. Fabric, Quilt, Forge, NeoForge — Kubik сам поставит нужную Java.</p>
     </div>
     <div class="card">
       <div class="card-icon">🧩</div>
-      <h3>Моды, сборки, объединение</h3>
-      <p>Каталог Modrinth и CurseForge: моды, плагины, ресурспаки, шейдеры, датапаки. Импорт файлов <code>.mrpack</code> и <code>.zip</code>. Две сборки объединяются в одну, конфликтные моды Kubik убирает сам.</p>
+      <h3 data-i18n="features.c2.title">Моды, сборки, объединение</h3>
+      <p data-i18n-html="features.c2.desc">Каталог Modrinth и CurseForge: моды, плагины, ресурспаки, шейдеры, датапаки. Импорт файлов <code>.mrpack</code> и <code>.zip</code>. Две сборки объединяются в одну, конфликтные моды Kubik убирает сам.</p>
     </div>
     <div class="card">
       <div class="card-icon">🛡️</div>
-      <h3>Сервер «Java + Bedrock»</h3>
-      <p>Друзья с ПК и с телефонов на один сервер. Vanilla, Paper, Purpur, Fabric, Forge, NeoForge, Bedrock. Плагины и моды — одной кнопкой из каталога.</p>
+      <h3 data-i18n="features.c3.title">Сервер «Java + Bedrock»</h3>
+      <p data-i18n="features.c3.desc">Друзья с ПК и с телефонов на один сервер. Vanilla, Paper, Purpur, Fabric, Forge, NeoForge, Bedrock. Плагины и моды — одной кнопкой из каталога.</p>
     </div>
     <div class="card">
       <div class="card-icon">🌐</div>
-      <h3>Игра через интернет</h3>
-      <p>Kubik сам попросит роутер открыть порты (UPnP), а если провайдер даёт «серый» IP — запустит туннель playit.gg или покажет адрес для Radmin VPN / ZeroTier / Tailscale.</p>
+      <h3 data-i18n="features.c4.title">Игра через интернет</h3>
+      <p data-i18n="features.c4.desc">Kubik сам попросит роутер открыть порты (UPnP), а если провайдер даёт «серый» IP — запустит туннель playit.gg или покажет адрес для Radmin VPN / ZeroTier / Tailscale.</p>
     </div>
     <div class="card">
       <div class="card-icon">👥</div>
-      <h3>Игроки на сервере</h3>
-      <p>Бан, разбан, кик, операторы, белый список — кнопками, с причиной. Работает и на выключенном сервере. На Bedrock‑сервере Kubik сам выгоняет забаненных.</p>
+      <h3 data-i18n="features.c5.title">Игроки на сервере</h3>
+      <p data-i18n="features.c5.desc">Бан, разбан, кик, операторы, белый список — кнопками, с причиной. Работает и на выключенном сервере. На Bedrock‑сервере Kubik сам выгоняет забаненных.</p>
     </div>
     <div class="card">
       <div class="card-icon">🤖</div>
-      <h3>ИИ‑помощник</h3>
-      <p>Круглая кнопка в углу: расскажет, как поставить моды, собрать сервер, позвать друзей, разобрать вылет. Без ключа отвечает встроенными подсказками, с ключом Anthropic — отвечает Claude.</p>
+      <h3 data-i18n="features.c6.title">ИИ‑помощник</h3>
+      <p data-i18n="features.c6.desc">Круглая кнопка в углу: расскажет, как поставить моды, собрать сервер, позвать друзей, разобрать вылет. Без ключа отвечает встроенными подсказками, с ключом Anthropic — отвечает Claude.</p>
     </div>
     <div class="card">
       <div class="card-icon">🌪️</div>
-      <h3>Датапак «Визер Шторм»</h3>
-      <p>Огромный растущий босс из обычных мобов и блоков. Его видят и Java‑, и Bedrock‑игроки, модов не нужно. Для серверов Minecraft 1.20.5 и новее.</p>
+      <h3 data-i18n="features.c7.title">Датапак «Визер Шторм»</h3>
+      <p data-i18n="features.c7.desc">Огромный растущий босс из обычных мобов и блоков. Его видят и Java‑, и Bedrock‑игроки, модов не нужно. Для серверов Minecraft 1.20.5 и новее.</p>
     </div>
     <div class="card">
       <div class="card-icon">🎨</div>
-      <h3>Оформление</h3>
-      <p>5 тем, свой цвет кнопок, пиксельный шрифт, своя картинка на главной. Секретные слова (крипер, свинка, нотч, херобрин, габен, алмаз, лава…) включают эксклюзивные темы.</p>
+      <h3 data-i18n="features.c8.title">Оформление</h3>
+      <p data-i18n="features.c8.desc">5 тем, свой цвет кнопок, пиксельный шрифт, своя картинка на главной. Секретные слова (крипер, свинка, нотч, херобрин, габен, алмаз, лава…) включают эксклюзивные темы.</p>
     </div>
     <div class="card">
       <div class="card-icon">🔐</div>
-      <h3>Вход через Microsoft</h3>
-      <p>Прямо в Kubik: почта подставляется, пароль вводится на сайте Microsoft. Привязанные к аккаунту сборки, скин и покупки подхватываются.</p>
+      <h3 data-i18n="features.c9.title">Вход через Microsoft</h3>
+      <p data-i18n="features.c9.desc">Прямо в Kubik: почта подставляется, пароль вводится на сайте Microsoft. Привязанные к аккаунту сборки, скин и покупки подхватываются.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="interface">
-  <h2 class="section-title">Интерфейс <span>лаунчера</span></h2>
-  <p class="section-sub">Взгляните на Kubik Launcher.</p>
+  <h2 class="section-title" data-i18n-html="interface.title">Интерфейс <span>лаунчера</span></h2>
+  <p class="section-sub" data-i18n="interface.sub">Взгляните на Kubik Launcher.</p>
 
   <div class="showcase">
     <div class="showcase-item">
-      <img src="IMG_3171.jpeg" alt="Главная и сборки" class="showcase-img">
+      <img src="IMG_3171.jpeg" alt="Главная и сборки" data-i18n-alt="interface.s1.alt" class="showcase-img">
       <div class="showcase-content">
-        <h3>Главная / Сборки</h3>
-        <p>Удобное создание сборок, выбор версий Java и Bedrock, а также быстрый запуск игры.</p>
+        <h3 data-i18n="interface.s1.title">Главная / Сборки</h3>
+        <p data-i18n="interface.s1.desc">Удобное создание сборок, выбор версий Java и Bedrock, а также быстрый запуск игры.</p>
       </div>
     </div>
 
     <div class="showcase-item">
-      <img src="IMG_3172.jpeg" alt="Каталог модов" class="showcase-img">
+      <img src="IMG_3172.jpeg" alt="Каталог модов" data-i18n-alt="interface.s2.alt" class="showcase-img">
       <div class="showcase-content">
-        <h3>Каталог модов</h3>
-        <p>Огромный выбор модов, плагинов, ресурспаков и шейдеров с быстрой установкой в один клик.</p>
+        <h3 data-i18n="interface.s2.title">Каталог модов</h3>
+        <p data-i18n="interface.s2.desc">Огромный выбор модов, плагинов, ресурспаков и шейдеров с быстрой установкой в один клик.</p>
       </div>
     </div>
 
     <div class="showcase-item">
-      <img src="IMG_3173.jpeg" alt="Серверы" class="showcase-img">
+      <img src="IMG_3173.jpeg" alt="Серверы" data-i18n-alt="interface.s3.alt" class="showcase-img">
       <div class="showcase-content">
-        <h3>Серверы</h3>
-        <p>Управление локальными мирами и серверами для совместной игры с друзьями по сети и интернету.</p>
+        <h3 data-i18n="interface.s3.title">Серверы</h3>
+        <p data-i18n="interface.s3.desc">Управление локальными мирами и серверами для совместной игры с друзьями по сети и интернету.</p>
       </div>
     </div>
 
     <div class="showcase-item">
-      <img src="IMG_3174.jpeg" alt="Настройки лаунчера" class="showcase-img">
+      <img src="IMG_3174.jpeg" alt="Настройки лаунчера" data-i18n-alt="interface.s4.alt" class="showcase-img">
       <div class="showcase-content">
-        <h3>Настройки</h3>
-        <p>Кастомизация тем оформления, выбор цвета кнопок, управление путями Java и параметрами памяти.</p>
+        <h3 data-i18n="interface.s4.title">Настройки</h3>
+        <p data-i18n="interface.s4.desc">Кастомизация тем оформления, выбор цвета кнопок, управление путями Java и параметрами памяти.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section class="section" id="phone">
-  <h2 class="section-title">Kubik <span>на iPhone и Android</span></h2>
-  <p class="section-sub">Тот же лаунчер, что на ПК — значком на экране «Домой», без браузерных панелей.</p>
+  <h2 class="section-title" data-i18n-html="phone.title">Kubik <span>на iPhone и Android</span></h2>
+  <p class="section-sub" data-i18n="phone.sub">Тот же лаунчер, что на ПК — значком на экране «Домой», без браузерных панелей.</p>
   <div class="grid">
     <div class="card">
       <div class="card-icon">📱</div>
-      <h3>Как поставить</h3>
-      <p>На ПК откройте «С телефона» и отсканируйте QR‑код. В Safari или Chrome нажмите «Поделиться» → «На экран „Домой“». Готово — значок Kubik появится рядом с другими приложениями.</p>
+      <h3 data-i18n="phone.c1.title">Как поставить</h3>
+      <p data-i18n="phone.c1.desc">На ПК откройте «С телефона» и отсканируйте QR‑код. В Safari или Chrome нажмите «Поделиться» → «На экран „Домой“». Готово — значок Kubik появится рядом с другими приложениями.</p>
     </div>
     <div class="card">
       <div class="card-icon">🕹️</div>
-      <h3>Что умеет</h3>
-      <p>Ставить моды и сборки, управлять сервером и консолью, банить игроков, пользоваться ИИ‑помощником. На Bedrock‑сервере кнопка «Зайти из Minecraft» сразу открывает игру с нужным адресом.</p>
+      <h3 data-i18n="phone.c2.title">Что умеет</h3>
+      <p data-i18n="phone.c2.desc">Ставить моды и сборки, управлять сервером и консолью, банить игроков, пользоваться ИИ‑помощником. На Bedrock‑сервере кнопка «Зайти из Minecraft» сразу открывает игру с нужным адресом.</p>
     </div>
     <div class="card">
       <div class="card-icon">💻</div>
-      <h3>Что нужно</h3>
-      <p>Сама Java Edition работает только на ПК — iOS и Android не разрешают запускать её на телефоне. Поэтому компьютер с Kubik должен быть включён и в той же Wi‑Fi, что телефон.</p>
+      <h3 data-i18n="phone.c3.title">Что нужно</h3>
+      <p data-i18n="phone.c3.desc">Сама Java Edition работает только на ПК — iOS и Android не разрешают запускать её на телефоне. Поэтому компьютер с Kubik должен быть включён и в той же Wi‑Fi, что телефон.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="whatsnew">
-  <h2 class="section-title">Что нового <span>в 1.5.0</span></h2>
-  <p class="section-sub">Короткая выжимка — что добавилось в последней версии.</p>
+  <h2 class="section-title" data-i18n-html="whatsnew.title">Что нового <span>в 1.5.0</span></h2>
+  <p class="section-sub" data-i18n="whatsnew.sub">Короткая выжимка — что добавилось в последней версии.</p>
   <div class="grid">
     <div class="card">
       <div class="card-icon">🌪️</div>
-      <h3>Датапак «Визер Шторм»</h3>
-      <p>Растущий босс из обычных мобов и блоков. Виден и Java‑, и Bedrock‑игрокам, модов не нужно. Призывается кнопкой или звездой Незера на плачущем обсидиане.</p>
+      <h3 data-i18n="whatsnew.c1.title">Датапак «Визер Шторм»</h3>
+      <p data-i18n="whatsnew.c1.desc">Растущий босс из обычных мобов и блоков. Виден и Java‑, и Bedrock‑игрокам, модов не нужно. Призывается кнопкой или звездой Незера на плачущем обсидиане.</p>
     </div>
     <div class="card">
       <div class="card-icon">🤖</div>
-      <h3>ИИ‑помощник</h3>
-      <p>Круглая кнопка в углу, работает и на телефоне. Без ключа — встроенные подсказки по лаунчеру, с ключом Anthropic — отвечает Claude.</p>
+      <h3 data-i18n="whatsnew.c2.title">ИИ‑помощник</h3>
+      <p data-i18n="whatsnew.c2.desc">Круглая кнопка в углу, работает и на телефоне. Без ключа — встроенные подсказки по лаунчеру, с ключом Anthropic — отвечает Claude.</p>
     </div>
     <div class="card">
       <div class="card-icon">👥</div>
-      <h3>Вкладка «Игроки»</h3>
-      <p>Бан, разбан, кик, операторы, белый список — кнопками, с причиной. На Bedrock‑сервере Kubik сам выгоняет забаненных при входе.</p>
+      <h3 data-i18n="whatsnew.c3.title">Вкладка «Игроки»</h3>
+      <p data-i18n="whatsnew.c3.desc">Бан, разбан, кик, операторы, белый список — кнопками, с причиной. На Bedrock‑сервере Kubik сам выгоняет забаненных при входе.</p>
     </div>
     <div class="card">
       <div class="card-icon">🌐</div>
-      <h3>Игра через интернет</h3>
-      <p>UPnP, распознавание «серого» IP, туннель playit.gg, адреса виртуальных сетей. Друзей больше не нужно звать только по Wi‑Fi.</p>
+      <h3 data-i18n="whatsnew.c4.title">Игра через интернет</h3>
+      <p data-i18n="whatsnew.c4.desc">UPnP, распознавание «серого» IP, туннель playit.gg, адреса виртуальных сетей. Друзей больше не нужно звать только по Wi‑Fi.</p>
     </div>
     <div class="card">
       <div class="card-icon">📱</div>
-      <h3>Kubik на iPhone и Android</h3>
-      <p>Ставится значком на экран «Домой» через QR‑код. Кнопка «Зайти из Minecraft» открывает Bedrock‑сервер прямо с телефона.</p>
+      <h3 data-i18n="whatsnew.c5.title">Kubik на iPhone и Android</h3>
+      <p data-i18n="whatsnew.c5.desc">Ставится значком на экран «Домой» через QR‑код. Кнопка «Зайти из Minecraft» открывает Bedrock‑сервер прямо с телефона.</p>
     </div>
     <div class="card">
       <div class="card-icon">🧩</div>
-      <h3>Bedrock на модовых серверах</h3>
-      <p>Fabric и NeoForge теперь пускают игроков с телефонов через Geyser + Floodgate. Часть блоков из модов показывается через Hydraulic.</p>
+      <h3 data-i18n="whatsnew.c6.title">Bedrock на модовых серверах</h3>
+      <p data-i18n="whatsnew.c6.desc">Fabric и NeoForge теперь пускают игроков с телефонов через Geyser + Floodgate. Часть блоков из модов показывается через Hydraulic.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="faq">
-  <h2 class="section-title">Частые <span>вопросы</span></h2>
+  <h2 class="section-title" data-i18n-html="faq.title">Частые <span>вопросы</span></h2>
 
   <details class="faq">
-    <summary>Бесплатно ли это?</summary>
-    <div class="faq-body">Да, Kubik Launcher бесплатный. Для игры в Bedrock Edition нужна лицензия, с джава можно играть без нее или с лицензией(Внимание! Вход в учетную запись Майкрософт в бете</div>
+    <summary data-i18n="faq.q1">Бесплатно ли это?</summary>
+    <div class="faq-body" data-i18n="faq.a1">Да, Kubik Launcher бесплатный. Для игры в Bedrock Edition нужна лицензия, с Java можно играть без неё или с лицензией (внимание: вход в учётную запись Microsoft в бете).</div>
   </details>
 
   <details class="faq">
-    <summary>Какие требования?</summary>
-    <div class="faq-body">Windows 10 или 11, 64 бит. ~1 ГБ свободного места плюс место под саму игру и моды. Интернет нужен при первом запуске, чтобы Kubik скачал Java, файлы Minecraft и выбранные моды.</div>
+    <summary data-i18n="faq.q2">Какие требования?</summary>
+    <div class="faq-body" data-i18n="faq.a2">Windows 10 или 11, 64 бит. ~1 ГБ свободного места плюс место под саму игру и моды. Интернет нужен при первом запуске, чтобы Kubik скачал Java, файлы Minecraft и выбранные моды.</div>
   </details>
 
   <details class="faq">
-    <summary>Будет ли ругаться антивирус или SmartScreen?</summary>
-    <div class="faq-body">Файл не подписан сертификатом, поэтому Windows может показать окно SmartScreen. Нажмите «Подробнее» → «Выполнить в любом случае». Антивирусы иногда помечают неподписанные лаунчеры как «неизвестное приложение» — это обычное дело для сторонних проектов.</div>
+    <summary data-i18n="faq.q3">Будет ли ругаться антивирус или SmartScreen?</summary>
+    <div class="faq-body" data-i18n="faq.a3">Файл не подписан сертификатом, поэтому Windows может показать окно SmartScreen. Нажмите «Подробнее» → «Выполнить в любом случае». Антивирусы иногда помечают неподписанные лаунчеры как «неизвестное приложение» — это обычное дело для сторонних проектов.</div>
   </details>
 
   <details class="faq">
-    <summary>Нужна ли учётная запись Microsoft?</summary>
-    <div class="faq-body">Есть игра с оффлайн аккаунтом и поддержка входа через официальный лаунчер(В бете!).</div>
+    <summary data-i18n="faq.q4">Нужна ли учётная запись Microsoft?</summary>
+    <div class="faq-body" data-i18n="faq.a4">Есть игра с оффлайн аккаунтом и поддержка входа через официальный лаунчер (в бете!).</div>
   </details>
 
   <details class="faq">
-    <summary>Браузер пишет «небезопасная загрузка» или блокирует файл</summary>
-    <div class="faq-body">Файл раздаётся по HTTP, поэтому Chrome и Edge могут отметить его как «небезопасный». Это не вирус — просто у сервера скачивания пока нет HTTPS. Нажмите «Сохранить» или «Оставить». В будущих версиях сайта это починим.</div>
+    <summary data-i18n="faq.q5">Браузер пишет «небезопасная загрузка» или блокирует файл</summary>
+    <div class="faq-body" data-i18n="faq.a5">Файл раздаётся по HTTP, поэтому Chrome и Edge могут отметить его как «небезопасный». Это не вирус — просто у сервера скачивания пока нет HTTPS. Нажмите «Сохранить» или «Оставить». В будущих версиях сайта это починим.</div>
   </details>
 
   <details class="faq">
-    <summary>Можно ли играть без интернета?</summary>
-    <div class="faq-body">Да. После того, как Kubik скачал нужную версию игры и Java, запуск работает без интернета — одиночная игра, LAN, свои серверы на этом же ПК.</div>
+    <summary data-i18n="faq.q6">Можно ли играть без интернета?</summary>
+    <div class="faq-body" data-i18n="faq.a6">Да. После того, как Kubik скачал нужную версию игры и Java, запуск работает без интернета — одиночная игра, LAN, свои серверы на этом же ПК.</div>
   </details>
 
   <details class="faq">
-    <summary>Есть ли версия для Linux или macOS?</summary>
-    <div class="faq-body">Сейчас собирается только Windows‑сборка (.exe). На macOS и Linux Kubik пока не распространяется, хотя его код мультиплатформенный.</div>
+    <summary data-i18n="faq.q7">Есть ли версия для Linux или macOS?</summary>
+    <div class="faq-body" data-i18n="faq.a7">Сейчас собирается только Windows‑сборка (.exe). На macOS и Linux Kubik пока не распространяется, хотя его код мультиплатформенный.</div>
   </details>
 
 </section>
 
 <section class="download-section" id="download">
-  <h2>Оцени лаунчер в деле</h2>
-  <p>Скачай Kubik Launcher и начни играть по‑новому.</p>
-  <a href="KubikLauncher.exe" class="btn" download>Скачать лаунчер</a>
-  <p class="download-meta">Версия 1.5.0 · Windows 10/11 (64 бит) · 9 МБ · Бесплатно</p>
+  <h2 data-i18n="download.title">Оцени лаунчер в деле</h2>
+  <p data-i18n="download.desc">Скачай Kubik Launcher и начни играть по‑новому.</p>
+  <a href="KubikLauncher.exe" class="btn" download data-i18n="download.btn">Скачать лаунчер</a>
+  <p class="download-meta" data-i18n="download.meta">Версия 1.5.0 · Windows 10/11 (64 бит) · 9 МБ · Бесплатно</p>
   <p class="download-meta" style="font-size: 0.78rem; opacity: 0.7;">SHA‑256: <code style="background: #0e1116; border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 0.95em;">e873ebdf4faac288acb4b83f3b3ca8f68f8cc7df9233b53b5ffbfb2e2d3c984a</code></p>
 </section>
 
 <footer>
   <p>© 2026 BTelling Studio</p>
-  <p style="font-size: 0.8rem; margin-top: 14px; max-width: 720px; margin-left: auto; margin-right: auto;">
+  <p style="font-size: 0.8rem; margin-top: 14px; max-width: 720px; margin-left: auto; margin-right: auto;" data-i18n="footer.disclaimer">
     Minecraft, Minecraft Launcher и логотипы — товарные знаки Mojang Synergies AB и Microsoft Corporation. BTelling Studio не связана с Mojang или Microsoft, не является их партнёром и не представляет их. Kubik Launcher — независимый проект.
-      <p style="margin-top: 14px;">
-    <a href="https://www.curseforge.com/members/btelling/projects" target="_blank" rel="noopener">BTelling на CurseForge</a>
   </p>
+  <p style="margin-top: 14px;">
+    <a href="https://www.curseforge.com/members/btelling/projects" target="_blank" rel="noopener" data-i18n="footer.curseforge">BTelling на CurseForge</a>
   </p>
 </footer>
+
+<script>
+  const TRANSLATIONS = {
+    ru: {
+      "meta.title": "Kubik Launcher — лаунчер Minecraft от BTelling Studio",
+      "meta.description": "Kubik Launcher: любая версия Minecraft Java и Bedrock, свой сервер «Java + Bedrock», каталог Modrinth и CurseForge, управление с телефона, ИИ-помощник. Бесплатно, для Windows 10/11.",
+      "nav.features": "Возможности",
+      "nav.interface": "Интерфейс",
+      "nav.phone": "С телефона",
+      "nav.whatsnew": "Что нового",
+      "nav.faq": "Вопросы",
+      "nav.download": "Скачать",
+      "hero.badge": "Бесплатно · Windows 10/11 · версия 1.5.0",
+      "hero.desc": "Любая версия Minecraft Java и Bedrock, свой сервер «Java + Bedrock» для игры со всеми друзьями, моды из Modrinth и CurseForge, управление с телефона. Один файл, никаких настроек.",
+      "hero.download": "Скачать лаунчер",
+      "hero.more": "Что умеет",
+      "features.title": "Главные <span>возможности</span>",
+      "features.sub": "То, чего нет у обычных лаунчеров.",
+      "features.c1.title": "Java и Bedrock в одном",
+      "features.c1.desc": "Любая версия Java Edition — от старых альф до свежих снапшотов. Запускает и Bedrock Edition из Microsoft Store. Fabric, Quilt, Forge, NeoForge — Kubik сам поставит нужную Java.",
+      "features.c2.title": "Моды, сборки, объединение",
+      "features.c2.desc": "Каталог Modrinth и CurseForge: моды, плагины, ресурспаки, шейдеры, датапаки. Импорт файлов <code>.mrpack</code> и <code>.zip</code>. Две сборки объединяются в одну, конфликтные моды Kubik убирает сам.",
+      "features.c3.title": "Сервер «Java + Bedrock»",
+      "features.c3.desc": "Друзья с ПК и с телефонов на один сервер. Vanilla, Paper, Purpur, Fabric, Forge, NeoForge, Bedrock. Плагины и моды — одной кнопкой из каталога.",
+      "features.c4.title": "Игра через интернет",
+      "features.c4.desc": "Kubik сам попросит роутер открыть порты (UPnP), а если провайдер даёт «серый» IP — запустит туннель playit.gg или покажет адрес для Radmin VPN / ZeroTier / Tailscale.",
+      "features.c5.title": "Игроки на сервере",
+      "features.c5.desc": "Бан, разбан, кик, операторы, белый список — кнопками, с причиной. Работает и на выключенном сервере. На Bedrock‑сервере Kubik сам выгоняет забаненных.",
+      "features.c6.title": "ИИ‑помощник",
+      "features.c6.desc": "Круглая кнопка в углу: расскажет, как поставить моды, собрать сервер, позвать друзей, разобрать вылет. Без ключа отвечает встроенными подсказками, с ключом Anthropic — отвечает Claude.",
+      "features.c7.title": "Датапак «Визер Шторм»",
+      "features.c7.desc": "Огромный растущий босс из обычных мобов и блоков. Его видят и Java‑, и Bedrock‑игроки, модов не нужно. Для серверов Minecraft 1.20.5 и новее.",
+      "features.c8.title": "Оформление",
+      "features.c8.desc": "5 тем, свой цвет кнопок, пиксельный шрифт, своя картинка на главной. Секретные слова (крипер, свинка, нотч, херобрин, габен, алмаз, лава…) включают эксклюзивные темы.",
+      "features.c9.title": "Вход через Microsoft",
+      "features.c9.desc": "Прямо в Kubik: почта подставляется, пароль вводится на сайте Microsoft. Привязанные к аккаунту сборки, скин и покупки подхватываются.",
+      "interface.title": "Интерфейс <span>лаунчера</span>",
+      "interface.sub": "Взгляните на Kubik Launcher.",
+      "interface.s1.alt": "Главная и сборки",
+      "interface.s1.title": "Главная / Сборки",
+      "interface.s1.desc": "Удобное создание сборок, выбор версий Java и Bedrock, а также быстрый запуск игры.",
+      "interface.s2.alt": "Каталог модов",
+      "interface.s2.title": "Каталог модов",
+      "interface.s2.desc": "Огромный выбор модов, плагинов, ресурспаков и шейдеров с быстрой установкой в один клик.",
+      "interface.s3.alt": "Серверы",
+      "interface.s3.title": "Серверы",
+      "interface.s3.desc": "Управление локальными мирами и серверами для совместной игры с друзьями по сети и интернету.",
+      "interface.s4.alt": "Настройки лаунчера",
+      "interface.s4.title": "Настройки",
+      "interface.s4.desc": "Кастомизация тем оформления, выбор цвета кнопок, управление путями Java и параметрами памяти.",
+      "phone.title": "Kubik <span>на iPhone и Android</span>",
+      "phone.sub": "Тот же лаунчер, что на ПК — значком на экране «Домой», без браузерных панелей.",
+      "phone.c1.title": "Как поставить",
+      "phone.c1.desc": "На ПК откройте «С телефона» и отсканируйте QR‑код. В Safari или Chrome нажмите «Поделиться» → «На экран „Домой“». Готово — значок Kubik появится рядом с другими приложениями.",
+      "phone.c2.title": "Что умеет",
+      "phone.c2.desc": "Ставить моды и сборки, управлять сервером и консолью, банить игроков, пользоваться ИИ‑помощником. На Bedrock‑сервере кнопка «Зайти из Minecraft» сразу открывает игру с нужным адресом.",
+      "phone.c3.title": "Что нужно",
+      "phone.c3.desc": "Сама Java Edition работает только на ПК — iOS и Android не разрешают запускать её на телефоне. Поэтому компьютер с Kubik должен быть включён и в той же Wi‑Fi, что телефон.",
+      "whatsnew.title": "Что нового <span>в 1.5.0</span>",
+      "whatsnew.sub": "Короткая выжимка — что добавилось в последней версии.",
+      "whatsnew.c1.title": "Датапак «Визер Шторм»",
+      "whatsnew.c1.desc": "Растущий босс из обычных мобов и блоков. Виден и Java‑, и Bedrock‑игрокам, модов не нужно. Призывается кнопкой или звездой Незера на плачущем обсидиане.",
+      "whatsnew.c2.title": "ИИ‑помощник",
+      "whatsnew.c2.desc": "Круглая кнопка в углу, работает и на телефоне. Без ключа — встроенные подсказки по лаунчеру, с ключом Anthropic — отвечает Claude.",
+      "whatsnew.c3.title": "Вкладка «Игроки»",
+      "whatsnew.c3.desc": "Бан, разбан, кик, операторы, белый список — кнопками, с причиной. На Bedrock‑сервере Kubik сам выгоняет забаненных при входе.",
+      "whatsnew.c4.title": "Игра через интернет",
+      "whatsnew.c4.desc": "UPnP, распознавание «серого» IP, туннель playit.gg, адреса виртуальных сетей. Друзей больше не нужно звать только по Wi‑Fi.",
+      "whatsnew.c5.title": "Kubik на iPhone и Android",
+      "whatsnew.c5.desc": "Ставится значком на экран «Домой» через QR‑код. Кнопка «Зайти из Minecraft» открывает Bedrock‑сервер прямо с телефона.",
+      "whatsnew.c6.title": "Bedrock на модовых серверах",
+      "whatsnew.c6.desc": "Fabric и NeoForge теперь пускают игроков с телефонов через Geyser + Floodgate. Часть блоков из модов показывается через Hydraulic.",
+      "faq.title": "Частые <span>вопросы</span>",
+      "faq.q1": "Бесплатно ли это?",
+      "faq.a1": "Да, Kubik Launcher бесплатный. Для игры в Bedrock Edition нужна лицензия, с Java можно играть без неё или с лицензией (внимание: вход в учётную запись Microsoft в бете).",
+      "faq.q2": "Какие требования?",
+      "faq.a2": "Windows 10 или 11, 64 бит. ~1 ГБ свободного места плюс место под саму игру и моды. Интернет нужен при первом запуске, чтобы Kubik скачал Java, файлы Minecraft и выбранные моды.",
+      "faq.q3": "Будет ли ругаться антивирус или SmartScreen?",
+      "faq.a3": "Файл не подписан сертификатом, поэтому Windows может показать окно SmartScreen. Нажмите «Подробнее» → «Выполнить в любом случае». Антивирусы иногда помечают неподписанные лаунчеры как «неизвестное приложение» — это обычное дело для сторонних проектов.",
+      "faq.q4": "Нужна ли учётная запись Microsoft?",
+      "faq.a4": "Есть игра с оффлайн аккаунтом и поддержка входа через официальный лаунчер (в бете!).",
+      "faq.q5": "Браузер пишет «небезопасная загрузка» или блокирует файл",
+      "faq.a5": "Файл раздаётся по HTTP, поэтому Chrome и Edge могут отметить его как «небезопасный». Это не вирус — просто у сервера скачивания пока нет HTTPS. Нажмите «Сохранить» или «Оставить». В будущих версиях сайта это починим.",
+      "faq.q6": "Можно ли играть без интернета?",
+      "faq.a6": "Да. После того, как Kubik скачал нужную версию игры и Java, запуск работает без интернета — одиночная игра, LAN, свои серверы на этом же ПК.",
+      "faq.q7": "Есть ли версия для Linux или macOS?",
+      "faq.a7": "Сейчас собирается только Windows‑сборка (.exe). На macOS и Linux Kubik пока не распространяется, хотя его код мультиплатформенный.",
+      "download.title": "Оцени лаунчер в деле",
+      "download.desc": "Скачай Kubik Launcher и начни играть по‑новому.",
+      "download.btn": "Скачать лаунчер",
+      "download.meta": "Версия 1.5.0 · Windows 10/11 (64 бит) · 9 МБ · Бесплатно",
+      "footer.disclaimer": "Minecraft, Minecraft Launcher и логотипы — товарные знаки Mojang Synergies AB и Microsoft Corporation. BTelling Studio не связана с Mojang или Microsoft, не является их партнёром и не представляет их. Kubik Launcher — независимый проект.",
+      "footer.curseforge": "BTelling на CurseForge"
+    },
+    en: {
+      "meta.title": "Kubik Launcher — Minecraft Launcher by BTelling Studio",
+      "meta.description": "Kubik Launcher: any version of Minecraft Java & Bedrock, your own \"Java + Bedrock\" server, Modrinth & CurseForge catalog, phone control, AI assistant. Free for Windows 10/11.",
+      "nav.features": "Features",
+      "nav.interface": "Interface",
+      "nav.phone": "Mobile",
+      "nav.whatsnew": "What's New",
+      "nav.faq": "FAQ",
+      "nav.download": "Download",
+      "hero.badge": "Free · Windows 10/11 · v1.5.0",
+      "hero.desc": "Any version of Minecraft Java & Bedrock, your own \"Java + Bedrock\" server to play with all your friends, mods from Modrinth and CurseForge, and control from your phone. One file, zero setup.",
+      "hero.download": "Download Launcher",
+      "hero.more": "See Features",
+      "features.title": "Key <span>Features</span>",
+      "features.sub": "What ordinary launchers don't have.",
+      "features.c1.title": "Java & Bedrock in One",
+      "features.c1.desc": "Any version of Java Edition — from classic alphas to the latest snapshots. Also launches Bedrock Edition from the Microsoft Store. Fabric, Quilt, Forge, NeoForge — Kubik automatically installs the right Java version.",
+      "features.c2.title": "Mods, Modpacks & Merging",
+      "features.c2.desc": "Modrinth and CurseForge catalog: mods, plugins, resource packs, shaders, and datapacks. Import <code>.mrpack</code> and <code>.zip</code> files. Merge two modpacks into one — Kubik automatically removes conflicting mods.",
+      "features.c3.title": "\"Java + Bedrock\" Server",
+      "features.c3.desc": "Play with friends on PC and phones on the same server. Vanilla, Paper, Purpur, Fabric, Forge, NeoForge, Bedrock. Install plugins and mods with one click from the catalog.",
+      "features.c4.title": "Online Multiplayer",
+      "features.c4.desc": "Kubik automatically asks your router to open ports (UPnP), and if your ISP uses CGNAT (private IP), it launches a playit.gg tunnel or shows the address for Radmin VPN / ZeroTier / Tailscale.",
+      "features.c5.title": "Server Players",
+      "features.c5.desc": "Ban, unban, kick, ops, and whitelist — with buttons and reasons. Works even when the server is offline. On Bedrock servers, Kubik automatically kicks banned players.",
+      "features.c6.title": "AI Assistant",
+      "features.c6.desc": "A round button in the corner: helps you install mods, set up a server, invite friends, or troubleshoot crashes. Works offline with built-in tips, or answers via Claude with an Anthropic API key.",
+      "features.c7.title": "\"Wither Storm\" Datapack",
+      "features.c7.desc": "A massive growing boss built from vanilla mobs and blocks. Visible to both Java and Bedrock players with no mods required. For Minecraft 1.20.5 and newer servers.",
+      "features.c8.title": "Customization",
+      "features.c8.desc": "5 themes, custom button colors, pixel font, and a custom home background image. Secret keywords (creeper, pig, notch, herobrine, gaben, diamond, lava…) unlock exclusive themes.",
+      "features.c9.title": "Microsoft Sign-In",
+      "features.c9.desc": "Right inside Kubik: your email is pre-filled and your password is entered on Microsoft's site. Account-linked modpacks, skin, and purchases carry over automatically.",
+      "interface.title": "Launcher <span>Interface</span>",
+      "interface.sub": "Take a look at Kubik Launcher.",
+      "interface.s1.alt": "Home and Modpacks",
+      "interface.s1.title": "Home / Modpacks",
+      "interface.s1.desc": "Easily create modpacks, switch between Java and Bedrock versions, and launch the game fast.",
+      "interface.s2.alt": "Mod Catalog",
+      "interface.s2.title": "Mod Catalog",
+      "interface.s2.desc": "A huge selection of mods, plugins, resource packs, and shaders with one-click installation.",
+      "interface.s3.alt": "Servers",
+      "interface.s3.title": "Servers",
+      "interface.s3.desc": "Manage local worlds and servers to play together with friends over LAN or the internet.",
+      "interface.s4.alt": "Launcher Settings",
+      "interface.s4.title": "Settings",
+      "interface.s4.desc": "Customize themes, pick button colors, and manage Java paths and memory allocation.",
+      "phone.title": "Kubik <span>on iPhone & Android</span>",
+      "phone.sub": "The same launcher as on PC — right on your Home Screen, with no browser bars.",
+      "phone.c1.title": "How to Install",
+      "phone.c1.desc": "On PC, open \"From Phone\" and scan the QR code. In Safari or Chrome, tap \"Share\" → \"Add to Home Screen\". Done — the Kubik icon appears right alongside your other apps.",
+      "phone.c2.title": "What It Can Do",
+      "phone.c2.desc": "Install mods and modpacks, manage your server and console, ban players, and use the AI assistant. On Bedrock servers, the \"Join from Minecraft\" button opens the game directly with the server address.",
+      "phone.c3.title": "What You Need",
+      "phone.c3.desc": "Java Edition itself only runs on PC — iOS and Android don't allow running it natively. Your PC running Kubik just needs to be powered on and connected to the same Wi‑Fi network as your phone.",
+      "whatsnew.title": "What's New <span>in 1.5.0</span>",
+      "whatsnew.sub": "A quick summary of what was added in the latest release.",
+      "whatsnew.c1.title": "\"Wither Storm\" Datapack",
+      "whatsnew.c1.desc": "A growing boss made of vanilla mobs and blocks. Visible to both Java and Bedrock players with no mods needed. Summon it with a button or a Nether Star on crying obsidian.",
+      "whatsnew.c2.title": "AI Assistant",
+      "whatsnew.c2.desc": "Round button in the corner, also works on mobile. Built-in launcher tips without an API key, or powered by Claude with an Anthropic key.",
+      "whatsnew.c3.title": "\"Players\" Tab",
+      "whatsnew.c3.desc": "Ban, unban, kick, ops, and whitelist with buttons and reasons. On Bedrock servers, Kubik automatically kicks banned players on join.",
+      "whatsnew.c4.title": "Online Multiplayer",
+      "whatsnew.c4.desc": "UPnP, CGNAT (private IP) detection, playit.gg tunnel, and virtual LAN addresses. You no longer have to invite friends over local Wi‑Fi only.",
+      "whatsnew.c5.title": "Kubik on iPhone & Android",
+      "whatsnew.c5.desc": "Installs as a Home Screen app via QR code. The \"Join from Minecraft\" button opens your Bedrock server directly from your phone.",
+      "whatsnew.c6.title": "Bedrock on Modded Servers",
+      "whatsnew.c6.desc": "Fabric and NeoForge servers now accept mobile players via Geyser + Floodgate. Selected modded blocks are rendered via Hydraulic.",
+      "faq.title": "Frequently Asked <span>Questions</span>",
+      "faq.q1": "Is it free?",
+      "faq.a1": "Yes, Kubik Launcher is completely free. Bedrock Edition requires a licensed copy, while Java Edition can be played either offline or with a license (Note: Microsoft account sign-in is currently in beta).",
+      "faq.q2": "What are the system requirements?",
+      "faq.a2": "Windows 10 or 11 (64-bit). ~1 GB of free disk space plus space for the game and mods. An internet connection is needed on first launch so Kubik can download Java, Minecraft files, and selected mods.",
+      "faq.q3": "Will antivirus or SmartScreen show a warning?",
+      "faq.a3": "The executable is not code-signed with a certificate, so Windows may show a SmartScreen prompt. Click \"More info\" → \"Run anyway\". Antivirus tools sometimes flag unsigned launchers as an \"unknown app\" — this is normal for independent projects.",
+      "faq.q4": "Do I need a Microsoft account?",
+      "faq.a4": "Offline accounts are supported, along with sign-in via the official Microsoft flow (currently in beta!).",
+      "faq.q5": "My browser says \"unverified download\" or blocks the file",
+      "faq.a5": "The file is served over HTTP, so Chrome and Edge may flag it as \"unsecure\". It is not a virus — the download server just doesn't have HTTPS yet. Click \"Keep\" or \"Save anyway\". This will be fixed in future updates.",
+      "faq.q6": "Can I play offline without internet?",
+      "faq.a6": "Yes. Once Kubik has downloaded the game version and Java, launching works completely offline — singleplayer, LAN, and local servers on the same PC.",
+      "faq.q7": "Is there a Linux or macOS version?",
+      "faq.a7": "Currently only a Windows build (.exe) is released. Kubik is not yet distributed for macOS or Linux, even though its codebase is cross-platform.",
+      "download.title": "Try the Launcher in Action",
+      "download.desc": "Download Kubik Launcher and start playing a whole new way.",
+      "download.btn": "Download Launcher",
+      "download.meta": "Version 1.5.0 · Windows 10/11 (64-bit) · 9 MB · Free",
+      "footer.disclaimer": "Minecraft, Minecraft Launcher, and their logos are trademarks of Mojang Synergies AB and Microsoft Corporation. BTelling Studio is not affiliated with, partnered with, or representing Mojang or Microsoft. Kubik Launcher is an independent project.",
+      "footer.curseforge": "BTelling on CurseForge"
+    }
+  };
+
+  function applyLanguage(lang, save) {
+    const dict = TRANSLATIONS[lang] || TRANSLATIONS.ru;
+    const activeLang = TRANSLATIONS[lang] ? lang : "ru";
+
+    document.documentElement.lang = activeLang;
+    document.title = dict["meta.title"];
+
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && dict["meta.description"]) {
+      metaDesc.setAttribute("content", dict["meta.description"]);
+    }
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+
+    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-html");
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-alt");
+      if (dict[key] !== undefined) el.setAttribute("alt", dict[key]);
+    });
+
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      const isActive = btn.getAttribute("data-lang") === activeLang;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-pressed", String(isActive));
+    });
+
+    if (save) {
+      try { localStorage.setItem("kubik_lang", activeLang); } catch (_) {}
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", activeLang);
+      window.history.replaceState({}, "", url.toString());
+    }
+  }
+
+  function detectInitialLanguage() {
+    const urlLang = new URLSearchParams(window.location.search).get("lang");
+    if (urlLang && TRANSLATIONS[urlLang.toLowerCase()]) {
+      return urlLang.toLowerCase();
+    }
+    try {
+      const saved = localStorage.getItem("kubik_lang");
+      if (saved && TRANSLATIONS[saved]) return saved;
+    } catch (_) {}
+    const browserLang = (navigator.language || navigator.userLanguage || "ru").toLowerCase();
+    return browserLang.startsWith("ru") ? "ru" : "en";
+  }
+
+  document.querySelectorAll(".lang-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyLanguage(btn.getAttribute("data-lang"), true);
+    });
+  });
+
+  applyLanguage(detectInitialLanguage(), false);
+</script>
 
 </body>
 </html>
