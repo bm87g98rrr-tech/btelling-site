@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Kubik Launcher — лаунчер Minecraft от BTelling Studio</title>
-  <meta name="description" content="Kubik Launcher: любая версия Minecraft Java и Bedrock, свой сервер «Java + Bedrock», каталог Modrinth и CurseForge, управление с телефона, ИИ-помощник. Бесплатно, для Windows 10/11.">
+  <title>Kubik Launcher — Minecraft Launcher by BTelling Studio</title>
+  <meta name="description" content="Kubik Launcher: any version of Minecraft Java & Bedrock, your own &quot;Java + Bedrock&quot; server, Modrinth & CurseForge catalog, phone control, AI assistant. Free for Windows 10/11.">
   <meta name="theme-color" content="#0b0d10">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://btelling.duckdns.org/">
-  <meta name="keywords" content="Kubik Launcher, лаунчер майнкрафт, minecraft launcher, скачать лаунчер, java и bedrock, свой сервер майнкрафт, модпак, Modrinth, CurseForge, геймпад, BTelling Studio">
+  <meta name="keywords" content="Kubik Launcher, minecraft launcher, download launcher, java and bedrock, minecraft server, modpack, Modrinth, CurseForge, BTelling Studio, лаунчер майнкрафт">
   <meta name="author" content="BTelling Studio">
-  <meta http-equiv="content-language" content="ru, en">
+  <meta http-equiv="content-language" content="en, ru">
 
   <!-- OpenGraph / Twitter: красивая превьюшка, когда ссылку кидают в чат -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Kubik Launcher">
-  <meta property="og:title" content="Kubik Launcher — Minecraft, свой сервер, моды">
-  <meta property="og:description" content="Любая версия Java и Bedrock, сервер «Java + Bedrock», моды из Modrinth и CurseForge, управление с телефона, ИИ-помощник. Бесплатно.">
+  <meta property="og:title" content="Kubik Launcher — Minecraft, Your Own Server, Mods">
+  <meta property="og:description" content="Any version of Java & Bedrock, Java + Bedrock server, Modrinth & CurseForge mods, phone control, AI assistant. Free.">
   <meta property="og:url" content="https://btelling.duckdns.org/">
   <meta property="og:image" content="https://btelling.duckdns.org/IMG_3171.jpeg">
   <meta name="twitter:card" content="summary_large_image">
@@ -200,8 +200,8 @@
     <a href="https://github.com/bm87g98rrr-tech" target="_blank" rel="noopener">GitHub</a>
     <a href="#download" class="cta" style="color: var(--accent); font-weight: 600;" data-i18n="nav.download">Скачать</a>
     <div class="lang-switch" role="group" aria-label="Language">
-      <button type="button" class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
-      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
     </div>
   </nav>
 </header>
@@ -615,8 +615,8 @@
   };
 
   function applyLanguage(lang, save) {
-    const dict = TRANSLATIONS[lang] || TRANSLATIONS.ru;
-    const activeLang = TRANSLATIONS[lang] ? lang : "ru";
+    const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+    const activeLang = TRANSLATIONS[lang] ? lang : "en";
 
     document.documentElement.lang = activeLang;
     document.title = dict["meta.title"];
@@ -664,8 +664,7 @@
       const saved = localStorage.getItem("kubik_lang");
       if (saved && TRANSLATIONS[saved]) return saved;
     } catch (_) {}
-    const browserLang = (navigator.language || navigator.userLanguage || "ru").toLowerCase();
-    return browserLang.startsWith("ru") ? "ru" : "en";
+    return "en";
   }
 
   document.querySelectorAll(".lang-btn").forEach((btn) => {
